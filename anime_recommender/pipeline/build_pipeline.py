@@ -1,5 +1,5 @@
-from src.data_loader import AnimeDataLoader
-from src.vector_store import VectorStoreBuilder
+from ..src.data_loader import AnimeDataLoader
+from ..src.vector_store import VectorStoreBuilder
 from dotenv import load_dotenv
 from ..utils.logger import get_logger
 from ..utils.custom_exception import CustomException
@@ -22,7 +22,7 @@ def main():
 
         logger.info("Vector store Built sucesfully....")
 
-        logger.info("Pipelien built sucesfuly....")
+        logger.info("Pipeline built successfully....")
     except Exception as e:
             logger.error(f"Failed to execute pipeline {str(e)}")
             raise CustomException("Error during pipeline " , e)
