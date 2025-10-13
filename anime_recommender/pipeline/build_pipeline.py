@@ -1,8 +1,8 @@
-from ..src.data_loader import AnimeDataLoader
-from ..src.vector_store import VectorStoreBuilder
+from anime_recommender.src.data_loader import AnimeDataLoader
+from anime_recommender.src.vector_store import VectorStoreBuilder
 from dotenv import load_dotenv
-from ..utils.logger import get_logger
-from ..utils.custom_exception import CustomException
+from anime_recommender.utils.logger import get_logger
+from anime_recommender.utils.custom_exception import CustomException
 
 load_dotenv()
 

@@ -1,8 +1,15 @@
-from src.vector_store import VectorStoreBuilder
-from src.recommender import AnimeRecommender
-from config.config import GROQ_API_KEY,MODEL_NAME
-from utils.logger import get_logger
-from utils.custom_exception import CustomException
+# from src.vector_store import VectorStoreBuilder
+# from src.recommender import AnimeRecommender
+# from config.config import GROQ_API_KEY,MODEL_NAME
+# from utils.logger import get_logger
+# from utils.custom_exception import CustomException
+
+from anime_recommender.src.vector_store import VectorStoreBuilder
+from anime_recommender.src.recommender import AnimeRecommender
+from anime_recommender.config.config import GROQ_API_KEY, MODEL_NAME
+from anime_recommender.utils.logger import get_logger
+from anime_recommender.utils.custom_exception import CustomException
+
 
 logger = get_logger(__name__)
 
