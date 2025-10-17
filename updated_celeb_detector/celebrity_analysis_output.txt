@@ -1,0 +1,28 @@
+Image: /Users/mohit/Documents/GitHub/LLMOPS/updated_celeb_detector/test_images/hrithik1.jpeg
+Face Detected: False
+Celebrity Name: Unknown
+
+Full Analysis:
+--------------------------------------------------
+**STEP 1: Describe the visible facial features in detail**
+
+The individual in the image has dark, short hair that is styled neatly. His facial structure is characterized by a strong jawline and prominent cheekbones, giving him a defined facial contour. He has a well-groomed beard and mustache, which adds to his distinctive appearance. His eyes are dark, and his eyebrows are thick and well-defined. The overall facial features suggest that he is likely in his mid-to-late 30s or early 40s.
+
+**STEP 2: Identify the person**
+
+Based on the facial features and overall appearance, the individual appears to be a well-known figure. After analyzing the image, I am confident that the person in the image is a celebrity.
+
+**STEP 3: Provide information**
+
+* **Confidence Level**: High
+* **Face Detected**: Yes
+* **Full Name**: Hrithik Roshan
+* **Profession**: Actor
+* **Nationality**: Indian
+* **Famous For**: Being a prominent Bollywood actor known for his dancing skills and versatile acting in various films.
+* **Top Achievements**: 
+  - Starred in critically acclaimed films like "Kaho Naa... Pyaar Hai" and "Dhoom 2"
+  - Received multiple Filmfare Awards for his performances
+  - Known for his iconic dance numbers in Bollywood movies
+
+**Alternative Matches**: None (I am confident that the person is Hrithik Roshan)
