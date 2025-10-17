@@ -13,7 +13,7 @@ load_dotenv()
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 # Import your detector
-from plant_pest_detector import PlantPestDetector
+from plant_pest_detector2 import PlantPestDetector
 
 def test_plant_pest_detection(image_path):
     """
