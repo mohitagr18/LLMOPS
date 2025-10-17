@@ -1,0 +1,6 @@
+Flask
+opencv-python
+numpy
+requests
+python-dotenv
+Pillow>=10.0.0
