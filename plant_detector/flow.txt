@@ -1,0 +1,9 @@
+FLOW:
+1. Image Upload → "Fall Armyworm detected" (short summary)
+2. System asks: "What's your location?" → User: "92336"
+3. MCP tools fetch: Weather, soil, local pests
+4. Enhanced summary with local context
+5. QA Engine now available:
+   - "What's the lifecycle of this pest here?"
+   - "Best organic spray available locally?"
+   - "Should I treat now or wait for rain to pass?"
