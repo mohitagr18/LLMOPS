@@ -38,6 +38,14 @@ def test_location_service():
             print(f"  🌡️  {weather['current']['temperature']}°{weather['current']['temperature_unit']}")
             print(f"  💨 {weather['current']['wind_speed']} {weather['current']['wind_direction']}")
             print(f"  ☁️  {weather['current']['short_forecast']}")
+            
+            # Display 3-day forecast
+            print(f"\n  📅 3-Day Forecast:")
+            for period in weather['forecast_3day']:
+                temp = period.get('temperature')
+                name = period.get('name')
+                forecast = period.get('short_forecast')
+                print(f"    • {name}: {temp}° - {forecast}")
         else:
             print(f"✗ {weather['error']}")
         

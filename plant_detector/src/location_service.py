@@ -16,7 +16,7 @@ class LocationService:
         self.base_url = "https://api.weather.gov"
         self.soap_url = "https://graphical.weather.gov/xml/SOAP_server/ndfdXMLclient.php"
         self.sda_url = "https://sdmdataaccess.nrcs.usda.gov/Tabular/post.rest"
-        self.user_agent = "AgriTech-Plant-Detector/1.0 (educational-portfolio-project)"
+        self.user_agent = "AgriTech-Plant-Detector"
         self.headers = {"User-Agent": self.user_agent}
     
     def zip_to_coordinates(self, zipcode: str) -> Optional[tuple]:
