@@ -4,6 +4,10 @@ import os
 import google.generativeai as genai
 from typing import Dict, Optional, List
 import re
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'mcp_server'))
+from amazon_tools import search_amazon_products
 
 
 class AgriQAEngine:
@@ -208,34 +212,88 @@ SOIL: {soil_texture}, {soil_drainage}
             if self.infestation_level == "Unknown":
                 prompt = f"""{context}
 
-Provide brief treatment recommendations for ALL THREE infestation levels (2 short paragraphs):
+Provide brief treatment recommendations for ALL THREE infestation levels.
 
+For each level, recommend 2-3 SPECIFIC product types (e.g., "Bt insecticide", "Spinosad spray", "Neem oil concentrate").
+
+Format:
 **Low Infestation:**
-- Manual removal options (if applicable for {self.plant_type})
-- Organic/preventive methods
-- Specific product: [name]
+- Manual removal (if applicable)
+- Product types: [specific product type 1], [specific product type 2]
 
 **Medium Infestation:**
-- Targeted treatments
-- Specific products: [2 options with names]
+- Product types: [specific product type 1], [specific product type 2]
 
 **High Infestation:**
-- Aggressive treatment
-- Specific products: [2 options with names]
+- Product types: [specific product type 1], [specific product type 2]
 
-Keep it BRIEF - exactly 2 short paragraphs total. Mention we'll provide Amazon links for products."""
+CRITICAL: Mention specific PRODUCT TYPES (not brand names) that we can search on Amazon."""
             else:
                 prompt = f"""{context}
 
-Provide treatment recommendations for {self.infestation_level.upper()} infestation (EXACTLY 2 paragraphs):
+Provide treatment recommendations for {self.infestation_level.upper()} infestation.
 
-{"- Manual removal first (handpicking caterpillars/larvae) since infestation is low" if self.infestation_level == "low" else ""}
-- 2-3 specific product names (organic + conventional options)
-- Application method for this soil type
-- Brief dosage/timing note
+Recommend 2-3 SPECIFIC product types suitable for {self.plant_type} (e.g., "organic Bt spray for caterpillars", "spinosad concentrate", "neem oil spray").
 
-CRITICAL: Keep response to EXACTLY 2 short paragraphs. Mention that Amazon purchase links will be provided for recommended products."""
-        
+{"Include manual removal as first option since infestation is low." if self.infestation_level == "low" else ""}
+
+Format in 2 short paragraphs. List specific PRODUCT TYPES (not brand names) that we can search on Amazon."""
+            
+            try:
+                response = self.model.generate_content(prompt)
+                treatment_text = response.text.strip()
+                
+                # Extract product names from recommendations
+                # Look for common product keywords
+                product_keywords = []
+                keywords_to_search = [
+                    "Bt", "spinosad", "neem oil", "pyrethrin", "insecticidal soap",
+                    "copper fungicide", "sulfur spray", "diatomaceous earth",
+                    "horticultural oil", "bacillus thuringiensis"
+                ]
+                
+                treatment_lower = treatment_text.lower()
+                for keyword in keywords_to_search:
+                    if keyword.lower() in treatment_lower:
+                        product_keywords.append(keyword)
+                
+                # If no specific products found, use general search term
+                if not product_keywords:
+                    product_keywords = [f"{self.pest_or_disease} treatment {self.plant_type}"]
+                
+                # Search Amazon for recommended products
+                amazon_products = []
+                for product_keyword in product_keywords[:2]:  # Limit to 2 searches
+                    search_query = f"{product_keyword} organic pesticide"
+                    products = search_amazon_products(search_query, max_results=2)
+                    amazon_products.extend(products)
+                
+                # Format Amazon product links
+                product_links = "\n\n---\n\n**🛒 Recommended Products on Amazon:**\n\n"
+                
+                if amazon_products and "error" not in amazon_products[0]:
+                    for i, product in enumerate(amazon_products[:4], 1):  # Show top 4
+                        if "error" not in product:
+                            product_links += f"{i}. **{product['name']}**\n"
+                            product_links += f"   💰 {product['price']} | ⭐ {product['rating']}\n"
+                            product_links += f"   🔗 [View on Amazon]({product['url']})\n\n"
+                else:
+                    product_links += "*(Product links temporarily unavailable)*\n"
+                
+                # Combine treatment recommendations with product links
+                answer = treatment_text + product_links
+                
+                self.conversation_history.append({
+                    "type": "menu_selection",
+                    "option": option,
+                    "answer": answer
+                })
+                
+                return answer
+                
+            except Exception as e:
+                return f"Error generating recommendations: {str(e)}"
+                
         elif option == 2:  # Detailed Soil Impact
             soil_props = soil.get('soil_properties', {})
             
