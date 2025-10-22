@@ -1,5 +1,6 @@
 # Web Framework
 Flask>=3.0.0
+streamlit>=1.28.0
 
 # AI/ML
 google-generativeai>=0.6.0
@@ -15,3 +16,4 @@ python-dotenv>=1.0.0
 fastmcp
 beautifulsoup4>=4.12.0
 lxml>=4.9.0
+mcp[cli]>=1.6.0

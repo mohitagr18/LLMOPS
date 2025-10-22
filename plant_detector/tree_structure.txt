@@ -1,0 +1,19 @@
+plant_detector/
+├── src/
+│   ├── __init__.py
+│   ├── plant_pest_detector.py
+│   ├── location_service.py
+│   └── qa_engine.py
+├── mcp_server/
+│   ├── amazon_tools.py
+│   └── weather_tools.py
+├── test_images/
+│   └── test_img1.jpg
+├── requirements.txt
+├── setup.py
+├── flow.txt
+├── test_location_service.py
+├── test_location_service_debug.py
+├── test_phase3_flow.py
+├── test_amazon_integration.py
+└── PROJECT_STRUCTURE.md
